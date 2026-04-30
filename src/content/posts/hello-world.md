@@ -14,7 +14,7 @@ draft: false
 
 ## 关于这个博客
 
-这个博客基于 Mizuki 主题构建，使用 Astro 作为静态站点生成器，支持：
+这个博客使用 Astro 作为静态站点生成器，支持：
 
 - Markdown / MDX 写作
 - 代码高亮与数学公式

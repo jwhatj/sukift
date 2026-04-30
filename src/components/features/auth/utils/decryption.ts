@@ -20,7 +20,7 @@ declare const CryptoJS: {
 };
 
 const CRYPTOJS_URL = "/assets/js/crypto-js.min.js";
-const VERIFICATION_PREFIX = "MIZUKI-VERIFY:";
+const VERIFICATION_PREFIX = "SUKIFT-VERIFY:";
 
 export async function loadCryptoLibraries(): Promise<void> {
 	if (typeof CryptoJS === "undefined") {

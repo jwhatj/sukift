@@ -427,17 +427,13 @@ export class SwupHooksManager {
 				document.getElementById("tcomment") ||
 				document.getElementById("giscus-container")
 			) {
-				const pageLoadedEvent = new CustomEvent("mizuki:page:loaded", {
+				const pageLoadedEvent = new CustomEvent("sukift:page:loaded", {
 					detail: {
 						path: window.location.pathname,
 						timestamp: Date.now(),
 					},
 				});
 				document.dispatchEvent(pageLoadedEvent);
-				console.log(
-					"Layout: 触发 mizuki:page:loaded 事件，路径:",
-					window.location.pathname,
-				);
 			}
 		}, ANIMATION_CONFIG.commentInitDelay);
 	}

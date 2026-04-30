@@ -15,7 +15,7 @@
     "update-bilibili": "node scripts/update-bilibili.mjs",
     "build": "node scripts/update-anime.mjs && astro build && pagefind --site dist && node scripts/compress-fonts.js",
     "submit": "node scripts/indexnow-submit.js",
-    "preview": "pnpm run build && wrangler dev",
+    "preview": "DEPLOY_TARGET=cloudflare pnpm run build && wrangler dev",
     "astro": "astro",
     "type-check": "tsc --noEmit --isolatedDeclarations",
     "new-post": "node scripts/new-post.js",
@@ -24,7 +24,7 @@
     "preinstall": "npx only-allow pnpm",
     "compress-fonts": "node scripts/compress-fonts.js",
     "generate-types": "wrangler types",
-    "deploy": "pnpm run build && wrangler deploy"
+    "deploy": "DEPLOY_TARGET=cloudflare pnpm run build && wrangler deploy"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.8",

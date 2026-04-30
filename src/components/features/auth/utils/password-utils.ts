@@ -24,11 +24,11 @@ export async function decryptContent(
 		const decryptedString = decryptedBytes.toString(CryptoJS.enc.Utf8);
 
 		// Verify the decrypted content has the expected prefix
-		if (!decryptedString || !decryptedString.startsWith("MIZUKI-VERIFY:")) {
+		if (!decryptedString || !decryptedString.startsWith("SUKIFT-VERIFY:")) {
 			return null;
 		}
 
-		return decryptedString.replace("MIZUKI-VERIFY:", "");
+		return decryptedString.replace("SUKIFT-VERIFY:", "");
 	} catch (error) {
 		console.error("Decryption error:", error);
 		return null;

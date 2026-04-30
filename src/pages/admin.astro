@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>内容管理 - sukift</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f5f5f5; color: #333; }
+    .container { max-width: 960px; margin: 0 auto; padding: 20px; }
+    header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+    h1 { font-size: 1.5rem; }
+    button { padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer; font-size: 0.9rem; }
+    .btn-primary { background: #4f46e5; color: white; }
+    .btn-danger { background: #dc2626; color: white; }
+    .btn-sm { padding: 4px 10px; font-size: 0.8rem; }
+    .post-list { display: flex; flex-direction: column; gap: 8px; }
+    .post-item { background: white; padding: 16px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 3px rgba(0,0,0,.1); }
+    .post-info h3 { font-size: 1rem; margin-bottom: 4px; }
+    .post-meta { font-size: 0.8rem; color: #666; }
+    .tag { background: #e0e7ff; color: #4f46e5; padding: 1px 6px; border-radius: 4px; font-size: 0.75rem; margin-right: 4px; }
+    .draft-tag { background: #fef3c7; color: #d97706; }
+    .actions { display: flex; gap: 8px; }
+    .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 100; justify-content: center; align-items: center; padding: 20px; }
+    .modal.show { display: flex; }
+    .modal-content { background: white; border-radius: 12px; width: 100%; max-width: 800px; max-height: 90vh; display: flex; flex-direction: column; }
+    .modal-header { padding: 16px 20px; border-bottom: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center; }
+    .modal-body { padding: 20px; overflow-y: auto; flex: 1; }
+    .modal-body label { display: block; font-size: 0.85rem; margin-bottom: 4px; margin-top: 12px; color: #666; }
+    .modal-body label:first-child { margin-top: 0; }
+    .modal-body input, .modal-body textarea { width: 100%; padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 0.9rem; font-family: inherit; }
+    .modal-body textarea { resize: vertical; min-height: 300px; font-family: "JetBrains Mono", monospace; font-size: 0.85rem; line-height: 1.5; }
+    .toast { position: fixed; bottom: 20px; right: 20px; background: #333; color: white; padding: 12px 20px; border-radius: 8px; opacity: 0; transition: opacity .3s; z-index: 200; }
+    .toast.show { opacity: 1; }
+    .empty { text-align: center; padding: 60px 20px; color: #999; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>📝 内容管理</h1>
+      <div style="display: flex; gap: 8px;">
+        <button class="btn-primary" onclick="openEditor()">+ 新建文章</button>
+        <a href="/" style="text-decoration:none;color:#666;font-size:0.9rem;display:flex;align-items:center;">← 返回博客</a>
+      </div>
+    </header>
+    <div id="post-list" class="post-list"></div>
+    <div id="empty" class="empty" style="display:none;">暂无文章，点击「新建文章」开始</div>
+  </div>
+
+  <div id="editor-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modal-title">新建文章</h2>
+        <button onclick="closeEditor()" style="background:none;font-size:1.5rem;padding:0 8px;">✕</button>
+      </div>
+      <div class="modal-body">
+        <label>文件名（不含扩展名）</label>
+        <input id="edit-filename" placeholder="my-post" />
+        <label>内容（Markdown + Frontmatter）</label>
+        <textarea id="edit-content"></textarea>
+      </div>
+      <div style="padding:16px 20px;border-top:1px solid #e5e7eb;display:flex;gap:8px;justify-content:flex-end;">
+        <button id="btn-delete" class="btn-danger btn-sm" style="display:none;margin-right:auto;" onclick="deletePost()">删除</button>
+        <button onclick="closeEditor()">取消</button>
+        <button class="btn-primary" onclick="savePost()">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script is:inline>
+    var posts = [];
+    var editingFile = null;
+
+    async function fetchPosts() {
+      var res = await fetch('/api/posts/');
+      posts = await res.json();
+      renderList();
+    }
+
+    function renderList() {
+      var list = document.getElementById('post-list');
+      var empty = document.getElementById('empty');
+      if (posts.length === 0) { list.innerHTML = ''; empty.style.display = 'block'; return; }
+      empty.style.display = 'none';
+      list.innerHTML = posts.map(function(p) {
+        var fm = p.frontmatter;
+        var tags = fm.tags ? String(fm.tags).replace(/[\[\]]/g,'').split(',').map(function(t) { return t.trim(); }).filter(Boolean) : [];
+        return '<div class="post-item">' +
+          '<div class="post-info">' +
+            '<h3>' + (fm.title || p.file) + ' ' + (fm.pinned === 'true' ? '📌' : '') + ' ' + (fm.draft === 'true' ? '<span class="tag draft-tag">草稿</span>' : '') + '</h3>' +
+            '<div class="post-meta">' +
+              (fm.published ? fm.published + ' · ' : '') + (fm.category || '') +
+              (tags.length ? ' · ' + tags.map(function(t) { return '<span class="tag">' + t + '</span>'; }).join('') : '') +
+            '</div>' +
+          '</div>' +
+          '<div class="actions">' +
+            '<button class="btn-sm btn-primary" onclick="openEditor(\'' + p.file + '\')">编辑</button>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+    }
+
+    function openEditor(file) {
+      editingFile = file || null;
+      document.getElementById('modal-title').textContent = file ? '编辑文章' : '新建文章';
+      document.getElementById('edit-filename').value = file ? file.replace('.md','') : '';
+      document.getElementById('edit-filename').disabled = !!file;
+      document.getElementById('edit-content').value = file ? (posts.find(function(p) { return p.file === file; }) || {}).raw || '' : '';
+      document.getElementById('btn-delete').style.display = file ? 'inline-block' : 'none';
+      document.getElementById('editor-modal').classList.add('show');
+    }
+
+    function closeEditor() {
+      document.getElementById('editor-modal').classList.remove('show');
+      editingFile = null;
+    }
+
+    async function savePost() {
+      var filename = document.getElementById('edit-filename').value.trim();
+      var content = document.getElementById('edit-content').value;
+      if (!filename) { toast('请输入文件名'); return; }
+
+      var action, body;
+      if (editingFile) {
+        body = { action: 'save', file: editingFile, content: content };
+      } else {
+        body = { action: 'create', name: filename, content: content };
+      }
+
+      var res = await fetch('/api/posts/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+      var data = await res.json();
+      if (data.error) { toast('错误: ' + data.error); return; }
+      closeEditor();
+      await fetchPosts();
+      toast(editingFile ? '文章已保存 ✓' : '文章已创建 ✓');
+    }
+
+    async function deletePost() {
+      if (!editingFile || !confirm('确定删除「' + editingFile + '」？此操作不可撤销。')) return;
+      var res = await fetch('/api/posts/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'delete', file: editingFile }),
+      });
+      await res.json();
+      closeEditor();
+      await fetchPosts();
+      toast('文章已删除 ✓');
+    }
+
+    function toast(msg) {
+      var el = document.getElementById('toast');
+      el.textContent = msg;
+      el.classList.add('show');
+      setTimeout(function() { el.classList.remove('show'); }, 2500);
+    }
+
+    fetchPosts();
+  </script>
+</body>
+</html>

@@ -36,7 +36,7 @@ import cloudflare from "@astrojs/cloudflare";
 // https://astro.build/config
 export default defineConfig({
   site: siteConfig.siteURL,
-  base: "/",
+  base: "/sukift/",
   trailingSlash: "always",
   output: "static",
 
@@ -247,5 +247,5 @@ export default defineConfig({
       },
 	},
 
-  adapter: process.env.NODE_ENV === "production" ? cloudflare() : undefined,
+  adapter: process.env.DEPLOY_TARGET === "cloudflare" ? cloudflare() : undefined,
 });

@@ -26,7 +26,7 @@ const SITE_TIMEZONE = 8; //设置你的网站时区 from -12 to 12 default in UT
 export const siteConfig: SiteConfig = {
 	title: "sukift",
 	subtitle: "记录学习与生活的个人博客",
-	siteURL: "http://localhost:4321/", // 请替换为你的站点URL，以斜杠结尾
+	siteURL: "https://fentian.github.io/sukift/", // 请替换为你的站点URL，以斜杠结尾
 	siteStartDate: "2026-04-29", // 站点开始运行日期，用于站点统计组件计算运行天数
 
 	timeZone: SITE_TIMEZONE,
@@ -55,7 +55,7 @@ export const siteConfig: SiteConfig = {
 		// 显示模式："text-icon" 显示图标+文本，"logo" 仅显示Logo
 		mode: "text-icon",
 		// 顶栏标题文本
-		text: "Mizuki",
+		text: "sukift",
 		// 顶栏标题图标路径，默认使用 public/assets/home/home.webp
 		icon: "assets/home/home.webp",
 		// 网站Logo图片路径
@@ -157,7 +157,6 @@ export const siteConfig: SiteConfig = {
 			url: "http://domain.com/api_v2.php?format=text&count=4", // API地址，返回每行一个图片链接的文本
 		},
 		// 这里需要使用PicFlow API的Text返回类型,所以我们需要format=text参数
-		// 项目地址:https://github.com/matsuzaka-yuki/PicFlow-API
 		// 请自行搭建API
 
 		homeText: {
@@ -168,7 +167,7 @@ export const siteConfig: SiteConfig = {
 				"欢迎来到 sukift",
 				"记录学习，分享生活",
 				"行以致远，学无止境",
-			]
+			],
 			typewriter: {
 				enable: true, // 启用副标题打字机效果
 
@@ -277,21 +276,9 @@ export const navBarConfig: NavBarConfig = {
 			children: [
 				{
 					name: "GitHub",
-					url: "https://github.com/LyraVoid/Mizuki",
+					url: "https://github.com/fentian",
 					external: true,
 					icon: "fa7-brands:github",
-				},
-				{
-					name: "Bilibili",
-					url: "https://space.bilibili.com/701864046",
-					external: true,
-					icon: "fa7-brands:bilibili",
-				},
-				{
-					name: "Gitee",
-					url: "https://gitee.com/matsuzakayuki/Mizuki",
-					external: true,
-					icon: "mdi:git",
 				},
 			],
 		},
@@ -377,7 +364,7 @@ export const profileConfig: ProfileConfig = {
 			{
 				name: "GitHub",
 				icon: "fa7-brands:github",
-				url: "https://github.com/",
+				url: "https://github.com/fentian",
 			},
 		],
 };
@@ -469,7 +456,7 @@ export const musicPlayerConfig: MusicPlayerConfig = {
 	floatingEntryMode: "fab", // 悬浮入口模式："default" 为独立悬浮播放器，"fab" 为集成到通用 FAB 组
 	mode: "local", // 音乐播放器模式，可选 "local" 或 "meting"
 	meting_api:
-		"https://meting.mysqil.com/api?server=:server&type=:type&id=:id&auth=:auth&r=:r", // Meting API 地址
+		"https://api.injahow.cn/meting/?server=:server&type=:type&id=:id&auth=:auth&r=:r", // Meting API 地址
 	id: "14164869977", // 歌单ID
 	server: "netease", // 音乐源服务器。有的meting的api源支持更多平台,一般来说,netease=网易云音乐, tencent=QQ音乐, kugou=酷狗音乐, xiami=虾米音乐, baidu=百度音乐
 	type: "playlist", // 播单类型
@@ -654,7 +641,7 @@ export const pioConfig: import("./types/config").PioConfig = {
 	mode: "draggable", // 默认为可拖拽模式
 	hiddenOnMobile: true, // 默认在移动设备上隐藏
 	dialog: {
-		welcome: "Welcome to Mizuki Website!", // 欢迎词
+		welcome: "Welcome to sukift!", // 欢迎词
 		touch: [
 			"What are you doing?",
 			"Stop touching me!",
@@ -664,7 +651,7 @@ export const pioConfig: import("./types/config").PioConfig = {
 		home: "Click here to go back to homepage!", // 首页提示
 		skin: ["Want to see my new outfit?", "The new outfit looks great~"], // 换装提示
 		close: "QWQ See you next time~", // 关闭提示
-		link: "https://github.com/LyraVoid/Mizuki", // 关于链接
+		link: "https://github.com/fentian/sukift", // 关于链接
 	},
 };
 

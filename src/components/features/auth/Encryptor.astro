@@ -17,7 +17,7 @@ const { password, hint = "" } = Astro.props;
 
 const htmlContent = await Astro.slots.render("default");
 
-const contentToEncrypt = "MIZUKI-VERIFY:" + htmlContent;
+const contentToEncrypt = "SUKIFT-VERIFY:" + htmlContent;
 const encryptedContent = CryptoJS.AES.encrypt(
 	contentToEncrypt,
 	String(password),

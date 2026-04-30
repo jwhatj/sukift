@@ -41,7 +41,7 @@ yarn.lock
 .claude
 
 cache/
-fuwari/
+sukift-content/
 src/data/myself.ts
 src/pages/myself.astro
 

@@ -1,7 +1,6 @@
 /**
  * TOC (Table of Contents) 工具类
  * 用于 CardTOC 的 TOC 逻辑
- * 基于 Firefly 项目的 TOCManager 实现
  */
 
 import { JAPANESE_KATAKANA } from "../components/features/toc/utils/japanese-katakana";

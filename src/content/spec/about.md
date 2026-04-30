@@ -1,11 +1,19 @@
 # 关于
 
-这里记录我的学习、思考和生活中的点滴。博客使用 [Astro](https://astro.build/) 框架构建，基于 [Mizuki](https://github.com/LyraVoid/Mizuki) 主题。
+这里记录我的学习、思考和生活中的点滴。博客使用 [Astro](https://astro.build/) 框架构建。
 
 ## 关于我
 
 热爱技术、设计和一切美好的事物。喜欢探索新知识，分享学习心得。
 
+目前主要关注前端开发、静态站点生成、以及各类有趣的开源项目。
+
+## 技术栈
+
+- **前端**: HTML / CSS / JavaScript / TypeScript
+- **框架**: Astro / Svelte / React
+- **工具**: Git / VS Code / pnpm
+
 ## 联系方式
 
-- GitHub: [访问主页](https://github.com/)
+- GitHub: [fentian](https://github.com/fentian)

@@ -113,7 +113,7 @@ export function initSidebarManager(config: SidebarDisplayConfig): void {
 export function getRightSidebarDisplayConfig(): SidebarDisplayConfig {
 	return {
 		elementId: "right-sidebar",
-		managerKey: "__mizukiRightSidebarManagerInitialized",
+		managerKey: "__sukiftRightSidebarManagerInitialized",
 		breakpoints: widgetManager.getBreakpoints(),
 		showConfig: {
 			mobile: false,

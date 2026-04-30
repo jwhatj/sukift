@@ -1,10 +1,10 @@
-name: Fuwari-yCENzh CI
+name: sukift CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
   workflow_dispatch:
 
 concurrency:

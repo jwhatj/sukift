@@ -26,7 +26,7 @@ const SITE_TIMEZONE = 8; //设置你的网站时区 from -12 to 12 default in UT
 export const siteConfig: SiteConfig = {
 	title: "sukift",
 	subtitle: "记录学习与生活的个人博客",
-	siteURL: "https://fentian.github.io/sukift/", // 请替换为你的站点URL，以斜杠结尾
+	siteURL: "https://jwhatj.github.io/sukift/", // 请替换为你的站点URL，以斜杠结尾
 	siteStartDate: "2026-04-29", // 站点开始运行日期，用于站点统计组件计算运行天数
 
 	timeZone: SITE_TIMEZONE,
@@ -276,7 +276,7 @@ export const navBarConfig: NavBarConfig = {
 			children: [
 				{
 					name: "GitHub",
-					url: "https://github.com/fentian",
+					url: "https://github.com/jwhatj",
 					external: true,
 					icon: "fa7-brands:github",
 				},
@@ -364,7 +364,7 @@ export const profileConfig: ProfileConfig = {
 			{
 				name: "GitHub",
 				icon: "fa7-brands:github",
-				url: "https://github.com/fentian",
+				url: "https://github.com/jwhatj",
 			},
 		],
 };
